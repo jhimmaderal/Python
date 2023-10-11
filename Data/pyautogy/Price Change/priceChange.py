@@ -14,6 +14,7 @@ selectApp = 0
 supplier = shtFile["A1"].value
 
 def goToPriceChange():
+    pg.click(58,17, button='left')
     pg.keyDown('alt')
     pg.press('r',presses=2)
     pg.keyUp('alt')
@@ -46,28 +47,45 @@ def createLines():
             time.sleep(0.5)
             steps = steps - 1                   
 
-def runApp():  
+def runApp():
+
     print("Choose Item: ")
     print("[1] Change Cost")
     print("[2] Price Change")
-    selectApp = input("Select Item: ")
+    selectApp = input("Select Item:")
+    startRow = 0
     
     if selectApp == "2": # Price Change
         print("Price Change - Running.....")
-        for item in range(3,rowFile + 1): # loop to A3 to last item
+        for item in range(startRow,rowFile + 1): # loop to A3 to last item
           codeCell = shtFile.cell(row=item, column = 1)
           codeVal = codeCell.value
           itemPrice.append(codeVal)
           retailCell = shtFile.cell(row=item, column = 5)
           retailVal = retailCell.value
           itemPrice.append(retailVal)
-          
-        time.sleep(2)
-        goToPriceChange()
-        createChange()
-        createLines()
-        print(itemPrice)
-        exit()
+    
+        print("1. Create New")
+        print("2. Continue Last Session")
+        createNew = input("Select Item: ")
+        if createNew == '1':
+            startRow = 3
+            time.sleep(2)
+            goToPriceChange()
+            createChange()
+            createLines()
+            print(itemPrice)
+            exit()
+        elif createChange == '2':
+            startRow = input("Select Row:  Default is 3 ")
+            time.sleep(2)
+            createLines()
+            print(itemPrice)
+            exit()
+        else:
+            print("Not in the list! ")
+            exit
+        
     elif selectApp == "1": # Cost Change
         cc.runCostChange()
         exit()

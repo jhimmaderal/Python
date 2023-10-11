@@ -1,15 +1,27 @@
 import pyautogui as pg
 import time 
 from openpyxl import load_workbook as lw
-  
-file = "price change.xlsx"
-itemCost = []
-xslFile = lw(file)
-shtFile = xslFile.active #change Sheet ["sheetName"]
-rowFile = shtFile.max_row  # count total row
-colFile = shtFile.max_column  # count total column
 
-for item in range(3,rowFile + 1): # loop to A3 to last item
+itemCost = []
+createNew = 0
+
+def OpenFile():
+  startRow = 3
+  print("1. Create New")
+  print("2. Continue Last Session")
+  createNew = input("Select Item: ")
+  if createNew == "1":
+    startRow = 3
+  elif createNew == "2":
+    startRow = input("Select Row: ")    
+  
+  file = "price change.xlsx"
+  xslFile = lw(file)
+  shtFile = xslFile.active #change Sheet ["sheetName"]
+  rowFile = shtFile.max_row  # count total row
+  colFile = shtFile.max_column  # count total column
+   
+  for item in range(startRow,rowFile + 1): # loop to A3 to last item
     codeCell = shtFile.cell(row=item, column = 1)
     codeVal = codeCell.value
     itemCost.append(codeVal)
@@ -21,7 +33,7 @@ for item in range(3,rowFile + 1): # loop to A3 to last item
     itemCost.append(landVal)     
 
 def costChange():
-  time.sleep(5)
+  time.sleep(2)
   steps = 0
   
   # Start
@@ -53,7 +65,16 @@ def costChange():
       steps = 0
 
 def runCostChange():
-  print("Price Change - Running.....")
-  print(itemCost)
-  costChange()
+  if createNew == "1":
+    OpenFile()
+    print("Price Change - Running.....")
+    print(itemCost)
+    costChange()
+  elif createNew == "2":
+    OpenFile()
+    print("Price Change - Running.....")
+    print(itemCost)
+    costChange()
+  else:
+    print("Not in the list")
 
