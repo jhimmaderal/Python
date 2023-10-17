@@ -14,16 +14,16 @@ supplierName = shtFile['B1'].value
 print(supplierName)
 
 for list in range(startRow,rowFile + 1): # loop to A3 to last item
-    for col in range(2,colFile):
+    for col in range(2,colFile + 1):
         itemCell = shtFile.cell(row=list, column = col) # loop from column
         itemVal = itemCell.value
         itemList.append(itemVal)
 print(f"{itemList}\n")
     
 def createLine():
+    time.sleep(2) 
     pg.click(197, 19, button="left") #Clicking the App
-    pg.press("f9")
-    time.sleep(1)   
+    pg.press("f9")  
     steps = 0
 
     for item in itemList:
@@ -42,7 +42,7 @@ def createLine():
             pg.write(str(item).upper())
             pg.press('tab')
             steps = steps + 1
-
+            
         elif steps == 3:  # SSS Group
             pg.hotkey('alt','down')
             pg.write(str(item).upper())
@@ -137,23 +137,21 @@ def createLine():
             else:
                 pg.press('f10')
                 steps = steps + 1
-                print(steps)   
                             
         elif steps == 19: # Add Location
             time.sleep(2)
             pg.press("f8")
             pg.press("tab",presses=42)
-            time.sleep(2)
             pg.press("right",presses=7)
             pg.press("tab",presses=3)
             pg.press("space",presses=2)
             pg.press("f10")
             steps = 0
-            break
+                        
+    print("Done !")
         
 # checkPostion()
 def runApp():
-    
     print(f"Extracting Files....\n")
     createLine()
     

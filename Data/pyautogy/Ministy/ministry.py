@@ -6,14 +6,14 @@ def ministry():
     print('Running...')
     time.sleep(4)
     for item in lists:
-        pyautogui.typewrite(str(item))
+        pyautogui.write(str(item))
         pyautogui.press("tab", presses=3)
     print('Done :D')
 
 runApp = input("Do you want to run the script? Y/N:").lower()
 if runApp == "y": 
     lists = []
-    path = "Z:\Jhim\MOI\Jhim PSMS MOI Updating.xlsx"
+    path = "Z:\Jim\MOI\Jhim PSMS MOI Updating.xlsx"
     xslFile = lw(path)
     shtFile = xslFile['MOI Data'] # change sheet
     rowFile = shtFile.max_row  # count total row
