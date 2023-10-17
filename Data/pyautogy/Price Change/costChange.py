@@ -77,4 +77,3 @@ def runCostChange():
     costChange()
   else:
     print("Not in the list")
-

@@ -1,131 +1,162 @@
-import pyautogui
+import pyautogui as pg
 import time
+from openpyxl import load_workbook as lw
+itemList = []
+startRow = 3
+promotion = 'n'
+file = "listing.xlsx"
+xslFile = lw(file)
+shtFile = xslFile.active #change Sheet ["sheetName"]
+rowFile = shtFile.max_row  # count total row
+colFile = shtFile.max_column  # count total column
 
+supplierName = shtFile['B1'].value
+print(supplierName)
 
-def checkPostion():
-    time.sleep(1)
-    file = open("listing.txt")
-    print(pyautogui.position())
-    print(file)
-
-
-def createNew():
-    print("Running .....")
-    pyautogui.press("capslock")
-
-    # Open File
-    file = open("listing.txt")
-    pyautogui.click(197, 19, button="left")
-    pyautogui.press("f9")
-    pyautogui.click(242, 102, button="left")
-
-
+for list in range(startRow,rowFile + 1): # loop to A3 to last item
+    for col in range(2,colFile):
+        itemCell = shtFile.cell(row=list, column = col) # loop from column
+        itemVal = itemCell.value
+        itemList.append(itemVal)
+print(f"{itemList}\n")
+    
 def createLine():
-    time.sleep(1)
-    file = open("listing.txt")
+    pg.click(197, 19, button="left") #Clicking the App
+    pg.press("f9")
+    time.sleep(1)   
     steps = 0
 
-    for item in file:
+    for item in itemList:
+        
         if steps == 0:  # Barcode
-            pyautogui.write(item)
+            pg.write(str(item).upper())
+            pg.press('tab')
             steps = steps + 1
-
+            
         elif steps == 1:  # Group
-            pyautogui.write(item)
+            pg.write(str(item).upper())
+            pg.press('tab')
             steps = steps + 1
 
         elif steps == 2:  # SS Group
-            pyautogui.write(item)
+            pg.write(str(item).upper())
+            pg.press('tab')
             steps = steps + 1
 
         elif steps == 3:  # SSS Group
-            pyautogui.click(300, 178, button="left")
-            pyautogui.write(item)
+            pg.hotkey('alt','down')
+            pg.write(str(item).upper())
+            pg.press('tab')
             steps = steps + 1
-
+            
         elif steps == 4:  # Brand
-            pyautogui.write(item)
+            pg.write(str(item).upper())
             steps = steps + 1
-
+            pg.press('tab')
+            
         elif steps == 5:  # Category
-            pyautogui.press("delete", presses=4)
-            pyautogui.write(item)
+            pg.press("delete", presses=4)
+            pg.write(str(item).upper())
+            pg.press('tab')
             steps = steps + 1
 
         elif steps == 6:  # Description
-            pyautogui.write(item)
-            pyautogui.press("enter")
+            pg.write(str(item).upper())
+            pg.press('tab',presses=2)
             steps = steps + 1
 
         elif steps == 7:  # Small Description
-            pyautogui.write(item)
-            pyautogui.press("enter")
+            pg.write(str(item).upper())
+            pg.press('tab',presses=2)
             steps = steps + 1
 
         elif steps == 8:  # Item Code
-            pyautogui.write(item)
+            pg.write(str(item).upper())
+            pg.press('tab')
             steps = steps + 1
 
         elif steps == 9:  # UOM
-            pyautogui.write(item)
+            pg.write(str(item).upper())
+            pg.press('tab')
             steps = steps + 1
 
         elif steps == 10:  # Base Packing
-            pyautogui.press("delete", presses=4)
-            pyautogui.write(item)
+            pg.press("delete", presses=4)
+            pg.write(str(item).upper())
+            pg.press('tab')
             steps = steps + 1
-
-        elif steps == 11:  # Major Packing
-            pyautogui.write(item)
-            steps = steps + 1
-
-        elif steps == 12:  # Major Packing Qty
-            pyautogui.write(".")
-            pyautogui.press("left", 2)
-            pyautogui.write(item)
-            steps = steps + 1
-
-        elif steps == 13:  # Major Packing Name
-            pyautogui.write(item)
-            steps = steps + 1
-
-        elif steps == 14:  # Supplier
-            pyautogui.write(item)
-            steps = steps + 1
-
-        elif steps == 15:  # Pack ID
-            pyautogui.write(item)
-            steps = steps + 1
-
-        elif steps == 16:  # Cost
-            pyautogui.write(item)
-            steps = steps + 1
-
-        elif steps == 17:  # Landing Cost
-            pyautogui.write(item)
-            steps = steps + 1
-
-        elif steps == 18:  # Retail
-            pyautogui.write(item)
-            steps = steps -18
-
-        elif steps == 19:  # Retail
-            steps = steps - 18
-            steps = 0
             
+        elif steps == 11:  # Major Packing
+            pg.write(str(item).upper())
+            pg.press('tab')
+            steps = steps + 1
+            
+        elif steps == 12:  # Major Packing Qty
+            if item > 1:
+                pg.write(".")
+                pg.press("left", 2)
+                pg.write(str(item).upper())
+                pg.press('tab')
+                steps = steps + 1
+            else:
+                steps = steps + 1
+            
+        elif steps == 13:  # Major Packing Name
+            pg.write(str(item).upper())
+            pg.press('enter')
+            steps = steps + 1
 
-def addLocation():
-    time.sleep(1)
-    pyautogui.press("f8")
-    pyautogui.click(521, 323, button="left")
-    pyautogui.click(528, 354, button="left")
-    pyautogui.press("f10")
-
-
+        elif steps == 14:  # Supplier & Pack ID
+            pg.write(str(supplierName).upper())
+            pg.press('enter')
+            pg.write(str(item).upper())
+            pg.press('enter')
+            steps = steps + 1
+            
+        elif steps == 15:  # Cost
+            pg.write(str(item).upper())
+            pg.press('tab')
+            steps = steps + 1
+            
+        elif steps == 16:  # Landing Cost
+            pg.write(str(item).upper())
+            pg.press('tab')
+            steps = steps + 1
+            
+        elif steps == 17:  # Retail
+            pg.write(str(item).upper())
+            steps = steps + 1
+            
+        elif steps == 18:  # Promotion
+            if promotion == 'y':
+                pg.press('tab', presses= 3)
+                pg.press('p')
+                pg.press('f10')
+                steps = steps + 1
+                
+            else:
+                pg.press('f10')
+                steps = steps + 1
+                print(steps)   
+                            
+        elif steps == 19: # Add Location
+            time.sleep(2)
+            pg.press("f8")
+            pg.press("tab",presses=42)
+            time.sleep(2)
+            pg.press("right",presses=7)
+            pg.press("tab",presses=3)
+            pg.press("space",presses=2)
+            pg.press("f10")
+            steps = 0
+            break
+        
 # checkPostion()
 def runApp():
-    createNew()
+    
+    print(f"Extracting Files....\n")
     createLine()
+    
 
 
 runApp()
