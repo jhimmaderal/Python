@@ -4,6 +4,11 @@ from openpyxl import load_workbook as lw
 itemList = []
 startRow = 4
 
+print("Kind of Listing?")
+print("[1] Normal Item")
+print("[2] Promotion Item")
+promotion = input('Select Options: ')
+
 lastSession = input("Continue Last Session? Y/N ").lower()
 
 if lastSession == 'y':
@@ -38,6 +43,7 @@ def createLine():
     
     for item in itemList:
         if steps == 0:  # Barcode
+            print(item)
             pg.press("f9")  
             time.sleep(2) 
             pg.write(str(item).upper())
@@ -135,8 +141,18 @@ def createLine():
             steps = steps + 1
             
         elif steps == 17:  # Retail
-            pg.write(str(item).upper())
-            pg.press('f10')
+            if promotion == '2':
+                pg.write(str(item).upper())
+                pg.press('tab', presses= 3)
+                pg.press('p')
+                pg.press('f10')
+                steps = steps + 1
+            else:
+                pg.write(str(item).upper())
+                pg.press('f10')     
+                steps = steps + 1
+            
+        elif steps == 18:  # Promotion   
             time.sleep(2)
             pg.press("f8")
             pg.press("tab",presses=42)
@@ -144,7 +160,7 @@ def createLine():
             pg.press("tab",presses=3)
             pg.press("space",presses=2)
             pg.press("f10")
-            steps = 0             
+            steps = 0  
                                                   
     print("Done !")
         
