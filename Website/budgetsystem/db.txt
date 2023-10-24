@@ -1,0 +1,4 @@
+database: reddcareers
+username: czvuqeftlb8rqjlu3quy
+host: aws.connect.psdb.cloud
+password: pscale_pw_WCwUaYbgDQYt0YDTEdfKleAP6As0TrV7KjGvdi15OGA

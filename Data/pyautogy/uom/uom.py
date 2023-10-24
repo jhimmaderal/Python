@@ -16,9 +16,7 @@ def openFile():
       itemList.append(itemVal)
   
   print(itemList)
-  return itemList
-  
-     
+  return itemList    
      
 def addUom(itemList):
   step = 0

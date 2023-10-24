@@ -4,7 +4,7 @@ from openpyxl import load_workbook as lw
 itemList = []
 startRow = 4
 
-lastSession = input("Continue Last Session? Y/N ").lower()
+lastSession = input("Continue Last Session? Y/N: ").lower()
 
 if lastSession == 'y':
     startSelect = int(input("Input Start Row: "))
@@ -21,8 +21,8 @@ shtFile = xslFile.active #change Sheet ["sheetName"]
 rowFile = shtFile.max_row  # count total row
 colFile = shtFile.max_column  # count total column
 
-supplierName = shtFile['B1'].value
-print(supplierName)
+supplierName = input(str("Type Supplier Code: "))
+
 
 for list in range(startRow,rowFile + 1): # loop to A3 to last item
     for col in range(2,colFile + 1):
