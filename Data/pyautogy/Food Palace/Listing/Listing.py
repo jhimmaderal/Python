@@ -151,8 +151,10 @@ def createLine():
 # checkPostion()
 def runApp():
     print(f"Extracting Files....\n")
-    createLine()
-    
-
+    start = input("Confirm Items? Y/N: ").lower()
+    if start == "y":
+        createLine()
+    else:
+        exit() 
 
 runApp()

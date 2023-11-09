@@ -11,7 +11,7 @@ rowFile = shtFile.max_row  # count total row
 colFile = shtFile.max_column  # count total column
 
 selectApp = 0
-supplier = shtFile["A1"].value
+supplier = input("Enter Supplier Code: ").upper()
 
 def goToPriceChange():
     pg.click(58,17, button='left')
@@ -35,8 +35,13 @@ def createLines():
     steps = 0
     for item in itemPrice:
         if steps == 0:
-            pg.write("@" + str(item))
-            steps = steps + 1
+            if len(str(item)) == 6:
+                pg.write("@" + str(item))
+                steps = steps + 1
+            else:
+                pg.write("@" + str(item))
+                steps = steps + 1
+            
         else:
             pg.press("tab", presses=7)
             pg.write(".")
@@ -52,11 +57,15 @@ def runApp():
     print("Choose Item: ")
     print("[1] Change Cost")
     print("[2] Price Change")
-    selectApp = input("Select Item:")
-    startRow = 0
+    selectApp = input("Select Item: ")
+    startRow = 3
     
     if selectApp == "2": # Price Change
-        print("Price Change - Running.....")
+        print("Price Change - Running.....")   
+        print("1. Create New")
+        print("2. Continue Last Session")        
+        createNew = input("Select Item: ")
+        
         for item in range(startRow,rowFile + 1): # loop to A3 to last item
           codeCell = shtFile.cell(row=item, column = 1)
           codeVal = codeCell.value
@@ -64,21 +73,22 @@ def runApp():
           retailCell = shtFile.cell(row=item, column = 5)
           retailVal = retailCell.value
           itemPrice.append(retailVal)
-    
-        print("1. Create New")
-        print("2. Continue Last Session")
-        createNew = input("Select Item: ")
+        
         if createNew == '1':
             startRow = 3
+            pg.click(58,17, button='left')
             time.sleep(2)
-            goToPriceChange()
-            createChange()
+            #goToPriceChange()
+            #createChange()
+            
             createLines()
             print(itemPrice)
             exit()
-        elif createChange == '2':
-            startRow = input("Select Row:  Default is 3 ")
+        elif createNew == '2':
+            startRow = input("Select Row:  Default is 3: ")
+            pg.click(58,17, button='left')
             time.sleep(2)
+            
             createLines()
             print(itemPrice)
             exit()

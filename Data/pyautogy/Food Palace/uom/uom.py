@@ -55,3 +55,5 @@ def runApp():
   else:
     print("Ok !")
     exit()
+    
+runApp()
