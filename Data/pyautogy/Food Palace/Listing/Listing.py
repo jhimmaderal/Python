@@ -17,7 +17,7 @@ else:
 
 file = "listing.xlsx"
 xslFile = lw(file)
-shtFile = xslFile.active #change Sheet ["sheetName"]
+shtFile = xslFile["Active"] #change Sheet ["sheetName"]
 rowFile = shtFile.max_row  # count total row
 colFile = shtFile.max_column  # count total column
 
