@@ -1,79 +1,227 @@
 import pyautogui as py
 import time
 
+
 def healer():
-  heal = 'y'
+  start = 'y'
   second = 0 
-  
+
   print("""[INSTRUCTION] \n
         1. Input Heal interval by seconds
         2. Input Hotkey for Mana Potion
-        
         """)
   try:
-    interval = int(input("Enter in seconds Heal interval: "))
-    manaPots = str(input("Input Hotkey for Mana Potion: "))
-    manaTime = str(input("nter in seconds Mana Potion interval "))
+    botDuration = int(input("Enter Bot Duration by Minute: "))
+    healInterval = int(input("Enter in seconds Heal interval: "))
+    hotkeyPots = int(input("Input Hotkey for Mana Potion: "))
+    manaTime = int(input("Enter in seconds Mana Potion interval: "))
     
-  except():
+    py.leftClick(9,7)
+    
+    botDurationMin  = botDuration * 60  
+  except ValueError:
     print("Enter a valid integer")
-  
-  while heal == "y":
-    time.sleep(interval)
-    py.press('3') # Heal
-    second = second + 1
-    usePotion = second % manaTime
-    if usePotion == manaTime:
-      py.press(f'{manaPots}') # Potion Hotkey
+    healer()
     
-def moonBeam():
+  except UnboundLocalError:
+    print("Enter a valid integer \n")
+    healer()
   
-  heal = 'y'
+  finally:
+    while start == "y":
+      for  x in range(botDurationMin):
+        time.sleep(1)
+        print(f'Timer: {x}')
+        second = second + 1
+        
+        actionTimer = x % healInterval
+        #print(actionTimer)
+        actionPotion = x % manaTime
+        #print(actionPotion)
+        buffTimer = x % 300
+      
+      
+        if actionTimer == 0: # Heal
+          py.press('1') # Heal
+        elif actionPotion == 0:
+          py.press(f'{hotkeyPots}') # Potion Hotkey
+
+        #if buffTimer == 0 :
+        #  print("Action : Using Buffs.....")
+        #  py.hotkey('alt','1', interval= .5)   
+        #  py.hotkey('alt','1', interval= .5)   
+        #  py.hotkey('alt','2', interval= .5)   
+        #  py.hotkey('alt','3', interval= .5)   
+        #  py.hotkey('alt','4', 333interval= .5)   
+        #  py.hotkey('alt','5', interval= .5)   
+        #  py.hotkey('alt','6', interval= .5)
+        #  py.hotkey('alt','7', interval= .5)
+        #  py.hotkey('alt','8', interval= .5)
+        #  #py.hotkey('alt','9', interval= .5)
+        #  #py.hotkey('alt','0', interval= .5)
+        
+def moonBeam():
+  start = 'y'
+  second = 0 
+  print("""[INSTRUCTION] \n
+        1. Input buff interval in seconds.
+        2. Buffs should be in Alt 1-0 sequence.
+        3. Input Hotkey for Moonbeam, Heal and Mana Potion.
+        """)
+  try:
+    botDuration = int(input("Enter Bot Duration by Minute: "))
+    buffInterval = int(input("Enter seconds buffs interval: "))
+    hotkeyMoon = int(input("Input Hotkey for Moonbeam: "))
+    hotkeyHeal = int(input("Input Hotkey for Heal: "))
+    hotkeyPots = int(input("Input Hotkey for Mana Potion: "))
+
+    botDurationMin  = botDuration * 60
+    py.leftClick(9,7)
+  except ValueError:
+    print("Enter a valid integer")
+    moonBeam()
+  
+  finally:
+    while start == 'y':
+      for x in range(botDurationMin): 
+        time.sleep(1)
+        second = second + 1
+
+        botTimer = x % 600
+        healTimer = x % 3
+        moonTimer = x % 2
+        buffTimer = x % buffInterval        
+
+        
+        if botTimer == 0:
+          print(f"Your Using this Bot for {x/60} minutes.")
+        
+        if buffTimer == 0 :
+          print("Action : Using Buffs.....")
+          py.hotkey('alt','1', interval= .5)   
+          py.hotkey('alt','1', interval= .5)   
+          py.hotkey('alt','2', interval= .5)   
+          py.hotkey('alt','3', interval= .5)   
+          py.hotkey('alt','4', interval= .5)   
+          py.hotkey('alt','5', interval= .5)   
+          py.hotkey('alt','6', interval= .5)
+          py.hotkey('alt','7', interval= .5)
+          py.hotkey('alt','8', interval= .5)
+          py.hotkey('alt','9', interval= .5)
+          py.hotkey('alt','0', interval= .5)
+          py.press(f'{hotkeyPots}',presses = 3, interval= .5)
+
+        if moonTimer == 0:
+          print("Action : Using Moonbeam")
+          py.press(f'{hotkeyMoon}')
+          
+        if healTimer == 0:
+          print("Action : Using Heal")
+          py.press(f'{hotkeyHeal}')       
+        
+def merkaba():
+  start = 'y'
   second = 0 
   
-  print("""[INSTRUCTION] \n
-        1. Input buff interval in seconds
-        2. Buffs should be in Alt 1-0 sequence
-        3. Input Hotkey for Mana Potion
-        
+  hotkeyMerk = 2
+  hotkeyPrev = 3
+  hotkeyHeal = 1
+  hotkeyPots = 4
+  buffDuration = 420
+  print(f"""[INSTRUCTION] \n
+        1. Input buff interval in seconds.
+        2. Buffs should be in Alt 1-0 sequence.
+        3. Place Hotkey for [{hotkeyMerk}]Merkaba, [{hotkeyPrev}]Prevention, [{hotkeyHeal}]Heal and [{hotkeyPots}]Mana Potion.
         """)
   try:
-    interval = int(input("Enter seconds buffs interval: "))
-    manaPots = str(input("Input Hotkey for Mana Potion: "))
-  except():
-    print("Enter a valid integer")
+    botDuration = int(input("Enter Bot Duration by Minute: "))
+    #buffInterval = int(input("Enter seconds buffs interval: "))
+    #prevInterval = int(input("Enter seconds Prevention interval: "))
+    merkInterval = int(input("Enter seconds Merkava interval: (Ave 40-50sec): "))
     
-  while heal == 'y':
-      for i in range(interval): #5mins
-          if second == 0 or second >= 300:
-              time.sleep(2)   
-              py.hotkey('alt','1', interval= .5)   
-              py.hotkey('alt','1', interval= .5)   
-              py.hotkey('alt','2', interval= .5)   
-              py.hotkey('alt','3', interval= .5)   
-              py.hotkey('alt','4', interval= .5)   
-              py.hotkey('alt','5', interval= .5)   
-              py.hotkey('alt','6', interval= .5)
-              py.hotkey('alt','7', interval= .5)
-              py.hotkey(f'{manaPots}',presses = 3, intervaasl= .5)
-              second = 0
-          time.sleep(1)
-          py.press('2')
-          second = second + 1
-          print(f'count {second}')
-          time.sleep(2)
-          py.press('3')
-          second = second + 2
-          i = i + 1
-          time.sleep(1)
-          second = second + 1
+    botDurationMin  = botDuration * 60
+    py.leftClick(9,7)
+  except ValueError:
+    print("Enter a valid integer")
+    merkaba()
+  except UnboundLocalError:
+    print("Enter a valid integer")
+    merkaba()
+  
+  finally:
+    while start == 'y':
+      for x in range(botDurationMin):
+        time.sleep(1)
+        second = second + 1
+        #print(x)
+        print(second)
+        
+        botTimer = second % 300 #evey 5 mins
+        merkabaTimer = second % merkInterval
+        prevTimer = second % 8
+        buffTimer = second % buffDuration
+        buffRemTimer = second % (buffDuration - 10)      
+      
+        if botTimer == 0:
+          print(f"Your Using this Bot for {second/60} minutes.")
 
+        if buffTimer == 0 or x == 0:
+          print("test")
+          print("Action : Using Buffs.....")
+          py.hotkey('alt','1', interval= .5)   
+          py.hotkey('alt','1', interval= .5)   
+          py.hotkey('alt','2', interval= .5)   
+          py.hotkey('alt','3', interval= .5)   
+          py.hotkey('alt','4', interval= .5)   
+          py.hotkey('alt','5', interval= .5)   
+          py.hotkey('alt','6', interval= .5)
+          py.hotkey('alt','7', interval= .5)
+          py.hotkey('alt','8', interval= .5)
+          py.hotkey('alt','9', interval= .5)
+          py.hotkey('alt','0', interval= .5)
+          #py.press(f'{hotkeyPots}',presses = 1, interval= .5)
+          second = second + 5
+
+        if buffRemTimer == 0 :
+          print("Buffing will start in 10sec! ")    
+      
+        if merkabaTimer == 0: # Merkaba
+          print("Action : Using Merkaba")
+          py.press('esc')
+          py.press(f'{hotkeyMerk}')
+          time.sleep(1)
+          second = second + 1
+          
+          print("Action : Prevention")
+          py.press(f'{hotkeyPrev}')
+          time.sleep(1)
+          second = second + 1
+          
+          print("Action : Using Heal 3x")
+          py.press(f'{hotkeyHeal}',presses= 7, interval= 1)
+          second = second + 7
+                    
+          print("Action : Using Merkaba")
+          py.press(f'{hotkeyMerk}')
+          time.sleep(1)
+          second = second + 1
+          
+          print("Action : Using Heal 3x")
+          py.press(f'{hotkeyHeal}',presses= 3, interval= 1)
+          time.sleep(3)
+          second = second + 6
+               
+        if prevTimer == 0: # Reminder 
+          print("Action : Prevention")
+          py.press(f'{hotkeyPrev}')
+                
+                  
 def runAssistBot():
   print ("Welcome to Assist Bot! Select Option: ")
   print("[1] Full Support")
   print("[2] Healer Only")
   print("[3] Moonbeam Solo")
-  print("[4] Mercaba Solo")
+  print("[4] Merkaba Solo")
 
   try:
     selection = int(input("Select Option: "))
@@ -82,20 +230,23 @@ def runAssistBot():
       selection = int(input("Select Option: "))
 
   except ValueError:
-    print("Enter a valid integer")
+    print("Enter a valid integer \n")
+    runAssistBot()
+    
+  except UnboundLocalError:
+    print("Enter a valid integer \n")
+    runAssistBot()
     
   match selection:
-    case 1: # FS
+    case 1: # Healer Merkaba
       pass
     case 2: # Healer
       healer()
     case 3: # Moonbeam
       moonBeam()
-    case 4: # Mercaba
-      pass
+    case 4: # Merkaba
+      merkaba()
     case _:
       print("Enter a valid integer")
       
-
-
 runAssistBot()

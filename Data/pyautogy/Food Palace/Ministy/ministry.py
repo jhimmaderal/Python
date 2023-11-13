@@ -1,15 +1,17 @@
-import pyautogui
+import pyautogui as pg
 import time
 from openpyxl import load_workbook as lw
 
 def ministry():
     print('Running...')
-    time.sleep(4)
-    for item in lists:
-        pyautogui.write(str(item))
-        pyautogui.press("tab", presses=3)
-    print('Done :D')
+    pg.click(58,17, button='left')
+    pg.press("tab", presses=26)
 
+    for item in lists:
+        pg.write(str(item))
+        pg.press("tab", presses=3)
+    print('Done :D')
+print("Run the app once in the Ministry Stock Adjustment")
 runApp = input("Do you want to run the script? Y/N:").lower()
 if runApp == "y": 
     lists = []

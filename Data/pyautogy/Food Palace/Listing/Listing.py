@@ -38,11 +38,15 @@ def createLine():
     
     for item in itemList:
         if steps == 0:  # Barcode
-            pg.press("f9")  
+            pg.press("f9") 
             time.sleep(2) 
-            pg.write(str(item).upper())
-            pg.press('tab')
-            steps = steps + 1
+            if len(str(item)) < 4:
+                pg.press("tab")
+                steps = steps + 1
+            else:
+                pg.write(str(item).upper())
+                pg.press('tab')
+                steps = steps + 1
             
         elif steps == 1:  # Group
             pg.write(str(item).upper())

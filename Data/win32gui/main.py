@@ -1,19 +1,21 @@
 import win32gui, win32ui, win32con
+
 import time
 
 def main():
   #list_window_names()
 
-  windowName = "Untitled - Notepad"
+  windowName = "Flyff"
   hwnd= win32gui.FindWindow(None, windowName)
-  hwnd = get_inner_windows(hwnd)['Edit']
-  win = win32ui.CreateWindowFromHandle(hwnd)
+  hwnd = get_inner_windows(hwnd)
+  #win = win32ui.CreateWindowFromHandle(hwnd)
   
-  win.SendMessage(win32con.WM_CHAR,ord('A'),0)
-  win.SendMessage(win32con.WM_KEYDOWN, win32con.VK_RETURN,0)
-  win.SendMessage(win32con.WM_KEYUP, win32con.VK_RETURN,0)
-  win.SendMessage(win32con.WM_CHAR,ord('d'),0)
-  get_inner_windows(hwnd)
+  
+  #win.SendMessage(win32con.WM_KEYDOWN,0x41,0)
+  
+  time.sleep(5)
+  #win.SendMessage(win32con.WM_KEYUP, win32con.VK_RETURN,0)
+  #win.SendMessage(win32con.WM_CHAR,ord('d'),0)
 
 def list_window_names():
   def winEnumHandler(hwnd, ctx):
@@ -31,4 +33,5 @@ def get_inner_windows(whndl):
   print (hwnds)
   return (hwnds)
 
+list_window_names()
 main()
