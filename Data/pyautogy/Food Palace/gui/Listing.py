@@ -4,7 +4,7 @@ from openpyxl import load_workbook as lw
 itemList = []
 startRow = 4
 
-def listing():
+def appListing():
     lastSession = input("Continue Last Session? Y/N: ").lower()
 
     if lastSession == 'y':
@@ -16,14 +16,13 @@ def listing():
     else:
         startRow = 4
 
-    file = "listing.xlsx"
+    file = "fpAppfile.xlsx"
     xslFile = lw(file)
-    shtFile = xslFile["Active"] #change Sheet ["sheetName"]
+    shtFile = xslFile["Listing"] #change Sheet ["sheetName"]
     rowFile = shtFile.max_row  # count total row
     colFile = shtFile.max_column  # count total column
 
     supplierName = input(str("Type Supplier Code: "))
-
 
     for list in range(startRow,rowFile + 1): # loop to A3 to last item
         for col in range(2,colFile + 1):
@@ -138,13 +137,14 @@ def listing():
                 pg.write(str(item).upper())
                 pg.press('tab')
                 steps = steps + 1
-
+                
             elif steps == 17:  # Retail
                 pg.write(str(item).upper())
                 pg.press('f10')
                 time.sleep(2)
                 pg.press("f8")
-                pg.press("tab",presses=42)
+                #pg.press("tab",presses=16) # 42
+                pg.hotkey('shift','tab')
                 pg.press("right",presses=7)
                 pg.press("tab",presses=3)
                 pg.press("space",presses=2)
@@ -160,7 +160,8 @@ def listing():
         if start == "y":
             createLine()
         else:
-            exit() 
+            start = input("Confirm Items? Y/N: ").lower()
 
     runApp()
+
     
