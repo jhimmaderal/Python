@@ -1,6 +1,20 @@
 import pyautogui as py
 import time
 
+def fullSupport():
+  hotkeyHeal = 1
+  hotkeyPots = 5 
+  print(f"""[INSTRUCTION] \n
+        1. Input buff interval in seconds.
+        2. Buffs should be in Alt 1-0 sequence.
+        3. [{hotkeyHeal}]Heal and [{hotkeyPots}]Mana Potion.
+        """)
+  
+  healInterval = int(input("Enter seconds Heal Interval: (Ave 40-50sec): "))
+  buffInterval = int(input("Enter seconds buffs interval: "))
+
+  
+
 def healer():
   start = 'y'
   second = 0 
@@ -257,7 +271,7 @@ def runAssistBot():
     runAssistBot()
     
   match selection:
-    case 1: # Healer Merkaba
+    case 1: # FS
       pass
     case 2: # Healer
       healer()
