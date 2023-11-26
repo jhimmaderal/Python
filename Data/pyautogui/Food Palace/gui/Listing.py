@@ -149,11 +149,11 @@ def appListing():
                 pg.press("tab",presses=3)
                 pg.press("space",presses=2)
                 pg.press("f10")
-                steps = 0             
-
+                steps = 0     
+                        
+        itemList = []
         print("Done !")
 
-    # checkPostion()
     def runApp():
         print(f"Extracting Files....\n")
         start = input("Confirm Items? Y/N: ").lower()

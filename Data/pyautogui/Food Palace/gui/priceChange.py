@@ -69,7 +69,8 @@ def appPriceChange():
                 pg.press("enter")
                 time.sleep(0.5)
                 steps = steps - 1 
-    
+        itemPrice = []
+        
     try:
         if createNew == 1:
             pg.click(58,17, button='left')

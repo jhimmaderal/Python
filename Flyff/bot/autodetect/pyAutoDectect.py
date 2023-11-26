@@ -21,29 +21,16 @@ def autoDetect() :
     print("Action Moving Player...")
     pg.keyDown(randMove1)
     pg.keyDown(randMove2)
-    time.sleep(3)
+    time.sleep(2)
     pg.keyUp(randMove1)
     pg.keyUp(randMove2)
 
-  while True:
-    try:     
-      # Timer
-      counter = counter +  1
-      
-      # Checking Validations
-      mob = pg.locateOnScreen('resources/mobs/wagsaac.png',confidence=.8)
-      # Monster Coordinate
-      x = mob[0]
-      y = mob[1]
-      w = mob[2]
-      h = mob[3]
-      
-      clickCoordinates = (x-30,y+50,w,h) # Mobs
-
-      if len(mob) > 1 :
-        try:
-          arrowBotRight = pg.locateOnScreen('resources/arrowRed.png',confidence=.9)
-          arrowBotLeft = pg.locateOnScreen('resources/arrowRed2.png',confidence=.9)
+  def attackMode():
+    try:
+          arrowRedRight = pg.locateOnScreen('resources/arrowRed.png',confidence=.9, grayscale=True)
+          arrowRedLeft = pg.locateOnScreen('resources/arrowRed2.png',confidence=.9, grayscale=True)
+          arrowBlueRight = pg.locateOnScreen('resources/arrowBlue.png',confidence=.9, grayscale=True)
+          arrowBlueLeft = pg.locateOnScreen('resources/arrowBlue2.png',confidence=.9, grayscale=True)
           
           print("Gotcha !")
           pg.leftClick(clickCoordinates)  
@@ -51,22 +38,46 @@ def autoDetect() :
           attackTime = 0
 
           # Attacking Mobs
-          while len(arrowBotRight) > 0 or len(arrowBotLeft) > 0:
+          while len(arrowRedRight) > 0 or len(arrowRedLeft) > 0 or len(arrowBlueRight) > 0 or len(arrowBlueLeft) > 0:
             attackTime = attackTime + 1
             #petFilter = pg.locateOnScreen('resources/pet.png',confidence=.8)
-            arrowBotRight = pg.locateOnScreen('resources/arrowRed.png',confidence=.9)
-            arrowBotLeft = pg.locateOnScreen('resources/arrowRed2.png',confidence=.9) 
+            arrowRedRight = pg.locateOnScreen('resources/arrowRed.png',confidence=.9, grayscale=True)
+            arrowRedLeft = pg.locateOnScreen('resources/arrowRed2.png',confidence=.9, grayscale=True)
+            arrowBlueRight = pg.locateOnScreen('resources/arrowBlue.png',confidence=.9, grayscale=True)
+            arrowBlueLeft = pg.locateOnScreen('resources/arrowBlue2.png',confidence=.9, grayscale=True) 
             pg.press('1')
             print(f"Attacking Monster!")
 
-            if attackTime == 20:
+            if attackTime == 30:
               pg.press('esc')
               moveCam()
               movePlayer()
               attackTime = 0
+    except:
+        pass
+      
+  while True:
+    try:     
+      # Timer
+      counter = counter +  1
+      
+      # Checking Validations
+      time.sleep(1)
+      mob = pg.locateOnScreen('resources/mobs/greemong.png',confidence=.9)
+      print(mob)
+      
+      # Monster Coordinate
+      x = mob[0]
+      y = mob[1]
+      w = mob[2]
+      h = mob[3]
 
-        except:
-          pass
+      # Big monster -40 +40
+      # Small monster -20 +40
+      clickCoordinates = (x,y,w-15,h+40) # Mobs
+
+      if len(mob) > 1 :
+          attackMode()
           
     # Checking Error
     except:

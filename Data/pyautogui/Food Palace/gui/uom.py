@@ -35,7 +35,7 @@ def appUom():
           
         case 1:
           py.press('f8')
-          py.press('tab',presses=15)
+          py.press('tab',presses=16)
           py.press('right',presses=6)
           py.press('tab',presses=9)
           py.write(str(item))
@@ -49,7 +49,9 @@ def appUom():
           py.write(str(item))
           py.press('f10')
           step = 0
-
+          
+    itemList =[]
+    
   def runApp():   
     run = input("Validate the File? Y/N: ").lower()
     if run ==  'y':
