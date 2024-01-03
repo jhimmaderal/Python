@@ -1,0 +1,12 @@
+{
+  "python.analysis.autoFormatStrings": false,
+  "editor.defaultFoldingRangeProvider": "ms-python.black-formatter",
+  "editor.formatOnPaste": true,
+  "editor.defaultFormatter": "ms-python.black-formatter",
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  }
+}

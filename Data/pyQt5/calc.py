@@ -252,6 +252,8 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+#----------------------Functions----------------------#
+
     # Remove Character
     def remove_it(self):
         screen = self.outLabel.text()
