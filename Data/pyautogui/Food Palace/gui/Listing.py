@@ -24,7 +24,9 @@ def appListing():
     rowFile = shtFile.max_row  # count total row
     colFile = shtFile.max_column  # count total column
 
-    supplierName = input(str("Type Supplier Code: \n"))
+    supplierName = input(str("Type Supplier Code: "))
+    print(f"Extracting Files....\n")
+    time.sleep(3)
 
     for list in range(startRow, rowFile + 1):  # loop to A3 to last item
         for col in range(2, colFile + 1):
@@ -39,6 +41,7 @@ def appListing():
             print(f"{item}")
         else:
             pass
+    print(f"\nTotal Items : {rowFile-3} \n")
 
     def createLine():
         steps = 0
@@ -163,11 +166,10 @@ def appListing():
         print("Done !")
 
     def runApp():
-        print(f"Extracting Files....\n")
         start = input("Confirm Items? Y/N: ").lower()
         if start == "y":
             createLine()
         else:
-            start = input("Confirm Items? Y/N: ").lower()
+            runApp()
 
     runApp()

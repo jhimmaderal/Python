@@ -61,16 +61,15 @@ def start():
             case _:
                 print("Selected number is not in the list")
                 pyttsx3.speak("Selected number is not in the list")
-                appSelection = input("Please enter number: ")
+                start()
 
     except ValueError:
-        appSelection = input("Please enter number: ")
-        pyttsx3.speak("Please enter number: ")
+        start()
 
 
 def reRun():
     reRun = str(input("Do you want to run the app again ?").lower)
-    if reRun == "y":
+    if "y" in reRun:
         start()
     else:
         exit()

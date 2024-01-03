@@ -1,6 +1,7 @@
 import pyautogui as pg
 import time
 from openpyxl import load_workbook as lw
+import fpApp as fp
 
 
 def appMinistry():
@@ -15,38 +16,40 @@ def appMinistry():
         print("Done :D")
 
     print("Run the app once in the Ministry Stock Adjustment\n")
-    runApp = input("Do you want to run the script? Y/N:").lower()
+    try:
+        lists = []
+        path = "Z:\Jim\MOI\Jhim PSMS MOI Updating.xlsx"
+        xslFile = lw(path)
+        shtFile = xslFile["MOI Data"]  # change sheet
+        rowFile = shtFile.max_row  # count total row
+        colFile = shtFile.max_column  # count total column
+        for i in range(4, rowFile + 1):
+            cllFile = shtFile.cell(row=i, column=3)
+            valFile = round(cllFile.value)
+            lists.append(valFile)
 
-    if runApp == "y":
-        try:
-            lists = []
-            path = "Z:\Jim\MOI\Jhim PSMS MOI Updating.xlsx"
-            xslFile = lw(path)
-            shtFile = xslFile["MOI Data"]  # change sheet
-            rowFile = shtFile.max_row  # count total row
-            colFile = shtFile.max_column  # count total column
-            for i in range(4, rowFile + 1):
-                cllFile = shtFile.cell(row=i, column=3)
-                valFile = round(cllFile.value)
-                lists.append(valFile)
+        print(f"Extracting Files....\n")
+        time.sleep(2)
+        print(f"Total Items : {rowFile-3}\n")
 
-            print(f"Extracting Files....\n")
-            itemCount = 0
-            for item in lists:
-                print(f"{item}")
-                itemCount += 1
-                breakText = itemCount % 3
-            if breakText == 0:
-                print(f"")
+        # itemCount = 0
+        # for item in lists:
+        #    print(f"{item}")
+        #    itemCount += 1
+        #    breakText = itemCount % 3
+        # if breakText == 0:
+        #    print(f"")
 
-            start = input("Confirm Items? Y/N: ").lower()
-            if start == "y":
-                ministry()
-            else:
-                start = input("Confirm Items? Y/N: ").lower()
-        except:
-            print("Please Validate the file again")
-            lists = []
-            runApp = input("Do you want to run the script? Y/N:").lower()
-    else:
-        print("Better luck next time :D ")
+        start = input("Confirm Items? Y/N: ").lower()
+        if "y" in start:
+            ministry()
+        else:
+            appMinistry()
+    except:
+        print("Please Validate the file again")
+        lists = []
+        runApp = input("Do you want to run the script? Y/N:").lower()
+        if "y" in runApp:
+            ministry()
+        else:
+            fp.start()
