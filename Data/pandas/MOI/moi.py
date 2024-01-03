@@ -1,0 +1,49 @@
+import pandas as pd
+import openpyxl
+
+def checkFiles():
+  dataframes = {}
+  excelFile = pd.ExcelFile("Z:/Jim/MOI/UploadData.xlsx")
+  sheetNames = excelFile.sheet_names
+  for sheetName in sheetNames:
+      dataframes[sheetName] = pd.read_excel(excelFile, sheet_name=sheetName)
+  work = dataframes["Sample"]
+  ap = dataframes["001"]
+  al = dataframes["002"]
+  ms = dataframes["003"]
+  
+  # pd.ExcelFile("UploadData.xlsx").sheet_names - Check Sheetnames
+  
+  def mergeFiles():
+    columns = [
+    "trdate",
+    "doc_type",
+    "item_code",
+    "barcode",
+    "Your Company CR#",
+    "loc_id",
+    "qty",
+    "price",
+    "refno",
+]
+    df1 = work.merge(ap, left_on="barcode", right_on="barcode", how="left")
+    df2 = work.merge(al, left_on="barcode", right_on="barcode", how="left")
+    df3 = work.merge(ms, left_on="barcode", right_on="barcode", how="left")
+
+    df1 = df1[columns].dropna()
+    df2 = df2[columns].dropna()
+    df3 = df3[columns].dropna()
+
+    line1 = len(df1)
+    line2 = len(df2)
+
+    with pd.ExcelWriter("Z:/Jim/MOI/LogSales.xlsx", engine="openpyxl") as writer:
+        df1.to_excel(writer ,"LogSales", index=False)
+        df2.to_excel(writer ,"LogSales",startrow = (line1 +1) ,header=False, index=False)
+        df3.to_excel(writer ,"LogSales",startrow = (line1+line2+1),header=False, index=False) 
+        
+
+  mergeFiles()
+ 
+
+checkFiles()
