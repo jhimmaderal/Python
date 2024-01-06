@@ -1,7 +1,6 @@
 import pyautogui as pg
 import time
 from openpyxl import load_workbook as lw
-import fpApp as fp
 
 
 def appMinistry():
@@ -52,4 +51,4 @@ def appMinistry():
         if "y" in runApp:
             ministry()
         else:
-            fp.start()
+            exit()
