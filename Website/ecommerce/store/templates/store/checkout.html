@@ -39,8 +39,7 @@
         </form>
       </div>
       <br />
-
-      <div class="box-element" hidden id="payment-info">
+      <div class="box-element" id="payment-info">
         <small>Paypal Options</small>
       </div>
     </div>
@@ -53,20 +52,38 @@
         <h3>Order Summary</h3>
         <hr />
 
-        <!-- Cart Row -->
-        <div class="cart-row">
-          <div style="flex: 2;">
-            <img class="row-image" src="{% static 'images/placeholder.png' %}" />
+        {% for item in items %}
+          <!-- Cart Row -->
+          <div class="cart-row">
+            <div style="flex: 2;">
+              <img class="row-image" src="{{ item.product.imageURL }}" />
+            </div>
+            <div style="flex: 2;">{{ item.product.name }}</div>
+            <div style="flex: 1;">${{ item.product.price }}</div>
+            <div style="flex: 1;">
+              <p class="quantity">X {{ item.quantity }}</p>
+            </div>
           </div>
-          <div style="flex: 2;">Product 1</div>
-          <div style="flex: 1;">$20</div>
-          <div style="flex: 1;">
-            <p class="quantity">x2</p>
-          </div>
-        </div>
-        <h5>Items: 2</h5>
-        <h5>Total: $40</h5>
+        {% endfor %}
+
+        <h5>Items: {{ order.get_cart_items }}</h5>
+        <h5>Total: ${{ order.get_cart_total|floatformat:2 }}</h5>
       </div>
     </div>
   </div>
+
+  <script type="text/javascript">
+    var shipping = '{{order.shipping}}'
+    if (shipping == 'False') {
+      document.getElementById('shipping-info').innerHTML = ''
+    }
+    
+    var form = document.getElementById('form')
+    form.addEventListener('submit', function (e) {
+      e.preventDefault()
+      console.log('Form Submitted..')
+      document.getElementById('form-button').classList.add('hidden')
+      document.getElementById('form-button').classList.add('hidden')
+    })
+  </script>
 {% endblock %}
