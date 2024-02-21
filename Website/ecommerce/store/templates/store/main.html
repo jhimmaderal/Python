@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Ecom</title>
+    <title>Food Palace</title>
 
     <!-- Bootsrap CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
@@ -36,18 +36,103 @@
         return cookieValue
       }
       const csrftoken = getToken('csrftoken')
+      
+      //Cookie
+      function getCookie(name) {
+        // Split cookie string and get all individual name=value pairs
+        var cookieArr = document.cookie.split(';')
+      
+        // loop through the array element
+        for (var i = 0; i < cookieArr.lenght; i++) {
+          var cookiePair = cookieArr[i].split('=')
+      
+          // Removing whitespace at the beginning of the cookie name and compre it with the given string
+          if (name == cookiePair[0].trim()) {
+            return decodeURIComponent(cookiePair[1])
+          }
+        }
+      
+        // Return null if not found
+        return null
+      }
+      
+      var cart = JSON.parse(getCookie('cart')) // cart cookie
+      
+      if (cart == undefined) {
+        cart = {}
+        console.log('Cart was created')
+        document.cookie = 'cart=' + JSON.stringify(cart) + ';domain=;path=/'
+      }
+      
+      console.log('Cart:', cart)
     </script>
   </head>
   <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg" style="background-color: #649B92;">
+    <div class="container-fluid">
+      <div class='d-flex'>
+      <img class="ico-img" src="/static/images/fpico.ico" />
+      <input type="text" class="form-control mh-20" id="search" placeholder="Search" />
+      <button type="button " class="btn btn-success" id="btn-search">Search</button>
+      </div>
+    </div>
+    <hr />
+    
+
+    <!-- Carousel -->
+    <div id="carousel-main" class="carousel slide">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carousel-main" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carousel-main" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carousel-main" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+
+      <!-- Image -->
       <div class="container-fluid">
-        <a id="navhead" class="navbar-brand" href="{% url 'store' %}">Ecom</a>
+        <div class="carousel-inner">
+          <div class="carousel-item active c-item">
+            <img src="/static/images/caro4.jpg" class="d-block w-100 c-image" alt="Promotion" />
+          </div>
+          <div class="carousel-item c-item">
+            <img src="/static/images/caro2.jpg" class="d-block w-100 c-image" alt="Promotion" />
+          </div>
+          <div class="carousel-item c-item">
+            <img src="/static/images/caro1.jpg" class="d-block w-100 c-image" alt="Promotion" />
+          </div>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carousel-main" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carousel-main" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+    <hr />
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg" style="background-color: #FF9900;">
+      <div class="container-fluid">
+        <a id="navhead" class="navbar-brand" href="{% url 'store' %}">Food Palace</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'store' %}">Store</a>
+              <a id="navhead1" class="nav-link active" aria-current="page" href="{% url 'store' %}">Store</a>
+            </li>
+            <li class="nav-item">
+              <a id="navhead1" class="nav-link active" aria-current="page" href="{% url 'store' %}">Grocery</a>
+            </li>
+            <li class="nav-item">
+              <a id="navhead1" class="nav-link active" aria-current="page" href="{% url 'store' %}">Fresh Food</a>
+            </li>
+            <li class="nav-item">
+              <a id="navhead1" class="nav-link active" aria-current="page" href="{% url 'store' %}">Non-Food</a>
+            </li>
+            <li class="nav-item">
+              <a id="navhead1" class="nav-link active" aria-current="page" href="{% url 'store' %}">Household</a>
             </li>
           </ul>
           <div class="form-inline my-2 my-lg-0">
@@ -59,11 +144,104 @@
       </div>
     </nav>
     <hr />
+
     <div class="container">
       {% block content %}
 
       {% endblock %}
     </div>
+
+    <!-- Footer -->
+    <section class="container" id="footer">
+      <hr />
+      <div>
+        <footer class="container py-5">
+          <div class="row">
+            <div class="col-12 col-md">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mb-2" role="img" viewBox="0 0 24 24">
+                <title>Product</title><circle cx="12" cy="12" r="10"></circle>
+                <path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"></path>
+              </svg>
+              <small class="d-block mb-3 text-body-secondary">© 2017–2023</small>
+            </div>
+            <div class="col-6 col-md">
+              <h5>Features</h5>
+              <ul class="list-unstyled text-small">
+                <li>
+                  <a class="link-secondary text-decoration-none" href="#">Cool stuff</a>
+                </li>
+                <li>
+                  <a class="link-secondary text-decoration-none" href="#">Random feature</a>
+                </li>
+                <li>
+                  <a class="link-secondary text-decoration-none" href="#">Team feature</a>
+                </li>
+                <li>
+                  <a class="link-secondary text-decoration-none" href="#">Stuff for developers</a>
+                </li>
+                <li>
+                  <a class="link-secondary text-decoration-none" href="#">Another one</a>
+                </li>
+                <li>
+                  <a class="link-secondary text-decoration-none" href="#">Last time</a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-6 col-md">
+              <h5>Resources</h5>
+              <ul class="list-unstyled text-small">
+                <li>
+                  <a class="link-secondary text-decoration-none" href="#">Resource name</a>
+                </li>
+                <li>
+                  <a class="link-secondary text-decoration-none" href="#">Resource</a>
+                </li>
+                <li>
+                  <a class="link-secondary text-decoration-none" href="#">Another resource</a>
+                </li>
+                <li>
+                  <a class="link-secondary text-decoration-none" href="#">Final resource</a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-6 col-md">
+              <h5>Resources</h5>
+              <ul class="list-unstyled text-small">
+                <li>
+                  <a class="link-secondary text-decoration-none" href="#">Business</a>
+                </li>
+                <li>
+                  <a class="link-secondary text-decoration-none" href="#">Education</a>
+                </li>
+                <li>
+                  <a class="link-secondary text-decoration-none" href="#">Government</a>
+                </li>
+                <li>
+                  <a class="link-secondary text-decoration-none" href="#">Gaming</a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-6 col-md">
+              <h5>About</h5>
+              <ul class="list-unstyled text-small">
+                <li>
+                  <a class="link-secondary text-decoration-none" href="#">Team</a>
+                </li>
+                <li>
+                  <a class="link-secondary text-decoration-none" href="#">Locations</a>
+                </li>
+                <li>
+                  <a class="link-secondary text-decoration-none" href="#">Privacy</a>
+                </li>
+                <li>
+                  <a class="link-secondary text-decoration-none" href="#">Terms</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </section>
 
     <!-- Bootsrap JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
